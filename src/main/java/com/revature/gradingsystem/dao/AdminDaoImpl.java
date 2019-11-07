@@ -68,26 +68,6 @@ public class AdminDaoImpl implements AdminDao {
 		return rows;
 	}
 
-	public int deleteScoreRange() throws DBException {
-
-		Connection con = null;
-		PreparedStatement pst = null;
-		int rows = 0;
-		try {
-			con = ConnectionUtil.getConnection();
-			String sql = "truncate table score_range";
-			pst = con.prepareStatement(sql);
-			
-			rows = pst.executeUpdate();
-
-		} catch (SQLException e) {
-			throw new DBException("Unable to delete the Score-Range Records", e);
-		} finally {
-			ConnectionUtil.close(con, pst);
-		}
-		return rows;
-	}
-
 	public List<ScoreRange> viewScoreRange() throws DBException {
 
 		Connection con = null;

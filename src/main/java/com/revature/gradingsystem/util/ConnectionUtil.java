@@ -13,12 +13,7 @@ public class ConnectionUtil {
 	private static final String driverClassName = "com.mysql.jdbc.Driver";
 	private static final String url = "jdbc:mysql://trainingdb.ck1ayq0lncmp.ap-south-1.rds.amazonaws.com:3306/manikandan_db";
 	private static final String username = "manikandan";
-<<<<<<< HEAD
 	private static final String password = "manikandan";
-=======
-	private static final String password = "manikandan"
-			+ "";
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
 
 	public static Connection getConnection() throws DBException {
 

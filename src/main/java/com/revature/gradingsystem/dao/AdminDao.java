@@ -13,8 +13,6 @@ public interface AdminDao {
 
 	int updateScoreRange(String grade, int min, int max) throws DBException;
 
-	int deleteScoreRange() throws DBException;
-
 	List<ScoreRange> viewScoreRange() throws DBException;
 
 }

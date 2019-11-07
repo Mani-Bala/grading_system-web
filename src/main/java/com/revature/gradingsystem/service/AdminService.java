@@ -7,8 +7,10 @@ import java.util.List;
 import com.revature.gradingsystem.dao.AdminDao;
 import com.revature.gradingsystem.exception.DBException;
 import com.revature.gradingsystem.exception.ServiceException;
+import com.revature.gradingsystem.exception.ValidatorException;
 import com.revature.gradingsystem.model.ScoreRange;
 import com.revature.gradingsystem.model.UserDetails;
+import com.revature.gradingsystem.validator.GradeValidator;
 
 public class AdminService {
 
@@ -33,9 +35,14 @@ public class AdminService {
 
 		AdminDao admindao = new AdminDaoImpl();
 		try {
+			GradeValidator gradeValidator = new GradeValidator();
+				gradeValidator.isGradeExist(grade.toUpperCase(), min, max);
+			
 			admindao.updateScoreRange(grade, min, max);
 			
-		} catch (DBException e) {
+		}catch (ValidatorException e) {
+			throw new ServiceException(e.getMessage());
+		}catch (DBException e) {
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -54,15 +61,4 @@ public class AdminService {
 		return list;
 	}
 	
-	public void deleteScoreRangeService() {
-
-		AdminDao admindao = new AdminDaoImpl();
-		
-		try {
-			admindao.deleteScoreRange();
-		} catch (DBException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
 }

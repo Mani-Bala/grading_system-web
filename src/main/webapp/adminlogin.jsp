@@ -1,101 +1,86 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="ISO-8859-1">
-		<title>Admin Login</title>
-	</head>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-<<<<<<< HEAD
-	<link rel="stylesheet" href="css/style.css">
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	
-	<!-- <script type="text/javascript">
-=======
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script type="text/javascript">
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
-		function admin()
-		{
-		    var name=document.getElementById("adminname").value;
-		    var password=document.getElementById("password").value;
-<<<<<<< HEAD
-		    console.log("AdminService-login");
-		    var formData = "adminname="+ name +"&  password="+ password;
-		    
-		}
-	</script> -->
-	
-	<body style="background : darkcyan;">
-=======
-		    console.log("UserService-login");
-		    var formData = "AdminName="+ name +"&  Password="+ password;
-		    
-		}
-	</script>
-	<body>
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
-		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-	        <a class="navbar-brand" style="color:white;">GRADING SYSTEM</a>
-	        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-	            aria-expanded="false" aria-label="Toggle navigation">
-	            <span class="navbar-toggler-icon"></span>
-	        </button>
-	        <div class="collapse navbar-collapse" id="collapsibleNavId">
-	            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-	                <li class="nav-item active">
-	                    <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
-	                </li>
-	                            
-	                <li class="nav-item">
-	                        <a class="nav-link" href="adminlogin.jsp">Admin Login</a>
-	                </li>
-	                <li class="nav-item">
-	                        <a class="nav-link" href="userlogin.jsp">User Login</a>
-	                </li>
-	                
-	            </ul>
-	           
-	        </div>
-   	 	</nav>
+
+<div class="img" style="height: 92vh;">
+
+	<div class="row justify-content-center align-items-center" style="height: 80vh; margin: 0;">
 		
-<<<<<<< HEAD
-		<%
-			String message = request.getParameter("message");
-			if (message != null){
-				out.println("<font color='red'>" + message + "</font>");
-			}
-		%>
-		<br>
+		<div class="col-md-6">
+			<div style="display:none;" id="errorMsg" class="alert alert-danger alert-dismissible fade show" role="alert">
+			  		<i id="messageBody"></i>
+			</div>
+		</div>
 		
-		<form class="mx-auto" style="width: 200px;" method="post" action="AdminLoginServlet">
-=======
-		<% String errMsg = request.getParameter("message"); 
-			if(errMsg != null)
-			{
-				out.print("<font color='red'>"+errMsg+"</font>");
-			}
-		%>
-		<br>
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
-		<h3>Admin Login</h3><br><br>
-		<form onsubmit="admin()">
-			UserName :
-<<<<<<< HEAD
-				<input type="text" name="adminname" placeholder="UserName" required autofocus /><br><br>
-			Password :
-				<input type = "password" name="password" placeholder="Password" required /><br><br>
-=======
-				<input type="text" name="adminname" id="adminname" placeholder="UserName" required autofocus /><br><br>
-			Password :
-				<input type = "password" name="password" id="password" placeholder="Password" /><br><br>
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
-				
-				<input type="submit" class="btn btn-primary" value="Login"/>
-				<input type="reset" class="btn btn-primary">
-		</form>
-	</body>
-</html>
+		<div class="w-100"></div>
+		
+		<div class="col-md-6 text-center" style="box-shadow: 5px 8px 18px -8px rgba(0, 0, 0, 0.5); border-radius: 10px; height:55vh;">
+			<form class="mx-auto formstyle"  onsubmit="adminLogin()" style="font: message-box;opacity: 0.8;border-radius: 10px;background-color: black;color: white;padding:0 20px;">
+				<div class="row justify-content-center align-items-center" style="height:300px">
+					<div class="col">
+						<h3>Admin Login</h3>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											UserName
+										</div>
+									</div>
+									<input type="text" autocomplete="off" id="username" class="form-control"  pattern="[A-Za-z]{1,20}$" title="Enter only alphabets and less than 20 letter" placeholder="UserName" required autofocus>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											Password
+										</div>
+									</div>
+									<input type="password" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
+	                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" placeholder="Password">
+								</div>
+							</div>
+							<input type="submit" class="btn btn-primary" value="Login"> 
+							<input type="reset" class="btn btn-primary" ><br><br>
+							<a href="index.jsp" >Back</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+<script>
+function adminLogin() {
+
+	event.preventDefault();
+	// step 1: Get form values
+	let userName = document.getElementById("username").value;
+	let passWord = document.getElementById("password").value;
+	
+	// prepare formdata
+	let formData = {"name": userName ,"password" :passWord};	
+	//send ajax request
+	//var url = server + "/gradingsystem-api/AdminLoginServlet?"+formData ;
+	var url = server + "/admin/login" ;
+	var login = $.post(url, formData);
+	
+	login.then(function (response) {
+
+		var data = response; //JSON.parse(response)
+		console.log(data);
+		
+			document.querySelector("#messageBody").innerHTML = "<font color='green'>You are successfully Logged in.</font>";
+			$('#errorMsg').css({'display':'block'});
+			window.location.replace('adminfeature.jsp')
+		
+    },
+	function(response) {
+		console.log("error");	
+		console.log(response);
+		
+		var msg = response.responseJSON.errorMessage;
+		console.log(msg);
+			document.querySelector("#messageBody").innerHTML = "<font color='red'>" + msg + "</font>";
+			$('#errorMsg').css({'display':'block'});
+		
+	});
+}
+</script>
+</div>

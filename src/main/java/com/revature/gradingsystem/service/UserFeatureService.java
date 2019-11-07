@@ -8,17 +8,24 @@ import com.revature.gradingsystem.dto.StudentGradeDTO;
 import com.revature.gradingsystem.dto.StudentMarkDTO;
 import com.revature.gradingsystem.exception.DBException;
 import com.revature.gradingsystem.exception.ServiceException;
+import com.revature.gradingsystem.exception.ValidatorException;
 import com.revature.gradingsystem.model.StudentMark;
+import com.revature.gradingsystem.validator.GradeValidator;
+import com.revature.gradingsystem.validator.StudentValidator;
 
 public class UserFeatureService {
 
 	public void updateMarksAndGradeService(int regno, List<StudentMark> marks) throws ServiceException {
 		
 		try {
+			StudentValidator studentValidate = new StudentValidator();
+				studentValidate.isRegnoUpdated(regno);
 			
 			new StudentMarkDAO().insertMarks(regno, marks);
 			new StudentGradeDAO().insertGrade(regno, marks);
 			
+		}catch (ValidatorException e) {
+			throw new ServiceException(e.getMessage());
 		} catch (DBException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -28,7 +35,13 @@ public class UserFeatureService {
 
 		List<StudentGradeDTO> list = null;
 		try {
+			// grade Validation
+			GradeValidator gradeValidator = new GradeValidator();
+				gradeValidator.gradeCheck(grade.toUpperCase());
+			
 			list = new StudentGradeDAO().findByGrade(grade);
+		}catch (ValidatorException e) {
+			throw new ServiceException(e.getMessage());
 		} catch (DBException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -46,14 +59,20 @@ public class UserFeatureService {
 		return list;
 	}
 
-	public StudentGradeDTO getStudentResult(int regno) {
+	public StudentGradeDTO getStudentResult(int regno) throws ServiceException {
 
 		StudentGradeDTO studentDetail =null;
 		
 		try {
+			// Reg-No validator
+			StudentValidator studentValidate = new StudentValidator();
+				studentValidate.isRegnoExistService(regno);
+			
 			studentDetail =new StudentGradeDAO().findByRegNo(regno);
+		}catch (ValidatorException e) {
+			throw new ServiceException(e.getMessage());
 		} catch (DBException e) {
-			System.out.println(e.getMessage());
+			throw new ServiceException(e.getMessage());
 		}
 		return studentDetail;
 	}

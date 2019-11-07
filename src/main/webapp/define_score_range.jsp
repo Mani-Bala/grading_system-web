@@ -1,20 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Define Score Range</title>
-</head>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-	<script src="js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="js/util.js"></script>
+
+	
+	<div class="row justify-content-center align-items-center"
+		style="height: 15vh; margin: 0;">
+		<div class="col-md-6">
+				<div style="display:none;" id="errorMsg" class="alert alert-primary alert-dismissible fade show" role="alert">
+				  		<i id="messageBody"></i>
+				</div>
+		</div>
+	</div>
+	
+	<div class="row justify-content-center align-items-center" style="height: 15vh; margin: 0;">
+		<div class="form-group">
+			<h3>Define Score Range</h3><br>
+				<form onsubmit="updateRange()">
+					Enter the Grade : <input type="text" id="grade" class="form-control" pattern="[A-Za-z]{1}$" title="Enter only one alphabets letter" required autofocus style="width: 17vh"><br>
+					Enter Minimum Score : <input type="number" id="min" min="0" max="100" class="form-control" required><br>
+					Enter Maximum Score : <input type="number" id="max" min="0" max="100" class="form-control" required><br>
+					<div>
+						<input type="submit" class="btn btn-primary form-control" value="Submit" style="margin: 10px;width: 35vh;"><br>
+						<input type="reset" class="btn btn-secondary form-control" style="margin: 10px;width: 35vh;">
+					</div>
+				</form>
+		</div>
+	</div>
+
+
 <script>
 function updateRange() {
-	console.log("updateRange");
 	event.preventDefault();
-	// step 1: Get form values
+	// Get form values
 	let gradeRange = document.getElementById("grade").value;
 	let minimum = document.getElementById("min").value;
 	let maximum = document.getElementById("max").value;
@@ -22,56 +36,26 @@ function updateRange() {
 	let formData = "grade="+gradeRange + "&min="+minimum + "&max=" + maximum;		
 	console.log(formData);
 	//send ajax request
-	var url = "http://localhost:8080/grading_system-web/DefineScoreRangeServlet?"+formData;
-	var registerPromise = $.ajax(url, "GET", formData);
+	//var url = server + "/gradingsystem-api/DefineScoreRangeServlet?"+formData;
+	console.log("server=>"+server);
+	var url = server + "/score/defineScore";
+	var registerPromise = $.post(url, formData);
 	
 	registerPromise.then(function(response) {
-		console.log("Error:" + JSON.stringify(response));
-		var msg = JSON.parse(response).responseMessage;
-		console.log(msg);
-		//alert(msg);
-		document.querySelector("#message").innerHTML = "<font color='red'>" + msg + "</font>";
+		console.log("success:" + response.infoMessage);
+		var msg = response.infoMessage;
+		if( msg == "Success" ){
+			document.querySelector("#messageBody").innerHTML = "<font color='green'>Successfully updated</font>";
+			$('#errorMsg').css({'display':'block'});
+		}
+	},function(error) {
+		var msg = error.responseJSON.errorMessage;
+		console.log("Error:" + msg);
+		if( msg != undefined ){
+			document.querySelector("#messageBody").innerHTML = "<font color='red'>"+msg+"</font>";
+			$('#errorMsg').css({'display':'block'});
+		}
 	});
 }
 
 </script>
-<body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-	        <a class="navbar-brand" style="color:white;">GRADING SYSTEM</a>
-	        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-	            aria-expanded="false" aria-label="Toggle navigation">
-	            <span class="navbar-toggler-icon"></span>
-	        </button>
-	        <div class="collapse navbar-collapse" id="collapsibleNavId">
-	            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-	                <li class="nav-item active">
-	                    <a class="nav-link" href="adminfeature.jsp">Home <span class="sr-only">(current)</span></a>
-	                </li>
-	                            
-	            </ul>
-	            <div class="nav-item-right">
-	                        <a class="nav-link" href="index.jsp">Logout</a>
-	            </div>
-	           
-	        </div>
-    	</nav><br><br>
-
-
-	<h3>Define Score Range</h3><br><br>
-	<div id="message"></div><br>
-	
-	<form onsubmit="updateRange()" >
-	Enter the Grade     :
-	<input type="text" id="grade" required autofocus/><br><br>
-	Enter Minimum Score :
-	<input type="number" id="min" min="0" max="100" required><br><br>
-	Enter Maximum Score :
-	<input type="number" id="max" min="0" max="100" required><br><br>
-	
-	<input type="submit" class="btn btn-primary" value="Login"/>
-	<input type="reset" class="btn btn-primary">  
-
-</form>
-
-</body>
-</html>
