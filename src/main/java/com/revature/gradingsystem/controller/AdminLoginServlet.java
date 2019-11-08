@@ -20,13 +20,8 @@ public class AdminLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-<<<<<<< HEAD
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-=======
 		response.getWriter().append("Served at: ").append(request.getContextPath());
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
-		
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,11 +30,7 @@ public class AdminLoginServlet extends HttpServlet {
 		
 		String name = request.getParameter("adminname");
 		String password = request.getParameter("password");
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
 		UserValidator uservalidator = new UserValidator();
 		AdminService adminService = new AdminService();
 		UserDetails userdetail = new UserDetails();
@@ -47,10 +38,7 @@ public class AdminLoginServlet extends HttpServlet {
 			uservalidator.Login(name, password);
 			userdetail = adminService.adminLogin(name, password);
 
-<<<<<<< HEAD
 			
-=======
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
 			if(userdetail != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGGED_IN_USER", userdetail);
@@ -58,19 +46,12 @@ public class AdminLoginServlet extends HttpServlet {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("adminfeature.jsp");
 					dispatcher.forward(request, response);
 				}else {
-<<<<<<< HEAD
-					
-=======
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
 					response.sendRedirect("adminlogin.jsp?message=Invalid Login Credentials");
 				}
 			
 		}catch(Exception e) {
-<<<<<<< HEAD
 			response.sendRedirect("adminlogin.jsp?message="+e.getMessage());
-=======
 			response.sendRedirect("adminlogin.jsp?message=" + e.getMessage());
->>>>>>> 2d4647fb878d6815f72df24c957d09e9fb84fd67
 		}
 	}
 
