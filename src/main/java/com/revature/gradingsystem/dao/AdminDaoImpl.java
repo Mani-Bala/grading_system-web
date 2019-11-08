@@ -52,11 +52,11 @@ public class AdminDaoImpl implements AdminDao {
 		int rows = 0;
 		try {
 			con = ConnectionUtil.getConnection();
-			String sql = "insert into score_range (grade, min, max) values (?,?,?)";
+			String sql = "update score_range set min = ?, max = ? where grade = ?";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, grade);
-			pst.setInt(2, min);
-			pst.setInt(3, max);
+			pst.setString(3, grade);
+			pst.setInt(1, min);
+			pst.setInt(2, max);
 			
 			rows = pst.executeUpdate();
 

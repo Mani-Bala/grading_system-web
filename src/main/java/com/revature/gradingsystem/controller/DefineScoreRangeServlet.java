@@ -32,22 +32,15 @@ public class DefineScoreRangeServlet extends HttpServlet {
 		int max=Integer.parseInt(maximum);
 		int min=Integer.parseInt(minimum);
 		
-        GradeValidator gradeValidator = new GradeValidator();
 		AdminService adminservice = new AdminService();
 		String errorMessage = null;
 		String status="";
 		try {
-			gradeValidator.isGradeExist(grade.toUpperCase(), min, max);
-			
 			adminservice.updateScoreRangeService(grade.toUpperCase(), min, max);
 			
 			status = "Success";
 		}catch (ServiceException e) {
 			errorMessage = e.getMessage();
-			
-		} catch (ValidatorException e) {
-			errorMessage = e.getMessage();
-		
 		}
 	
 		String json = null;

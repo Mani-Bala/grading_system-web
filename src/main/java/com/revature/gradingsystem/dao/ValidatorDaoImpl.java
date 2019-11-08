@@ -10,35 +10,6 @@ import com.revature.gradingsystem.util.ConnectionUtil;
 
 public class ValidatorDaoImpl implements ValidatorDao {
 
-	public ScoreRange findGrade(String grade) throws DBException {
-
-		Connection con = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		ScoreRange scorerange = null;
-
-		try {
-			con = ConnectionUtil.getConnection();
-			String sql = "select grade, min, max from score_range where grade = ? ";
-			pst = con.prepareStatement(sql);
-			pst.setString(1, grade);
-			rs = pst.executeQuery();
-
-			if (rs.next()) {
-				scorerange = new ScoreRange();
-				scorerange.setGrade("grade");
-			}
-
-		} catch (SQLException e) {
-			throw new DBException("Unable to check the grade is presented", e);
-		} catch (DBException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			ConnectionUtil.close(con, pst, rs);
-		}
-		return scorerange;
-	}
-
 	public ScoreRange findRange(int mark) throws DBException {
 
 		Connection con = null;

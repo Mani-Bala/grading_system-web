@@ -2,19 +2,19 @@ package com.revature.gradingsystem.dto;
 
 public class StudentMarkDTO {
 
-	private Integer regNo;
+	private int regNo;
 	
 	private String studentName;
 	
 	private String grade;
-	
-	private Integer mark;
 
-	public Integer getRegNo() {
+	private int mark;
+	
+	public int getRegNo() {
 		return regNo;
 	}
 
-	public void setRegNo(Integer regNo) {
+	public void setRegNo(int regNo) {
 		this.regNo = regNo;
 	}
 
@@ -34,13 +34,12 @@ public class StudentMarkDTO {
 		this.grade = grade;
 	}
 
-	public Integer getMark() {
+	public int getMark() {
 		return mark;
 	}
 
-	public void setMark(Integer mark) {
+	public void setMark(int mark) {
 		this.mark = mark;
-	}	
-	
-	
+	}
+
 }

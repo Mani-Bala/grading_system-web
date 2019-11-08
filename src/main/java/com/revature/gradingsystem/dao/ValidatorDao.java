@@ -6,8 +6,6 @@ import com.revature.gradingsystem.model.ScoreRange;
 
 public interface ValidatorDao {
 
-	ScoreRange findGrade(String grade) throws DBException;
-
 	ScoreRange findRange(int min) throws DBException;
 
 	int findRegNo(int regno) throws DBException;

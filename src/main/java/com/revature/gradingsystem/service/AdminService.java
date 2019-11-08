@@ -36,7 +36,7 @@ public class AdminService {
 		AdminDao admindao = new AdminDaoImpl();
 		try {
 			GradeValidator gradeValidator = new GradeValidator();
-				gradeValidator.isGradeExist(grade.toUpperCase(), min, max);
+				gradeValidator.isGradeExist(min, max);
 			
 			admindao.updateScoreRange(grade, min, max);
 			

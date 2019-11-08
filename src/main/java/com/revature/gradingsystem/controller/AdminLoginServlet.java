@@ -51,7 +51,6 @@ public class AdminLoginServlet extends HttpServlet {
 			
 		}catch(Exception e) {
 			response.sendRedirect("adminlogin.jsp?message="+e.getMessage());
-			response.sendRedirect("adminlogin.jsp?message=" + e.getMessage());
 		}
 	}
 
