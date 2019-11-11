@@ -1,4 +1,4 @@
-package com.revature.gradingsystem.controller;
+package com.revature.gradingsystem.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,18 +13,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.revature.gradingsystem.dto.StudentGradeDTO;
 import com.revature.gradingsystem.model.StudentMark;
-import com.revature.gradingsystem.service.UserFeatureService;
+import com.revature.gradingsystem.service.UserService;
 import com.revature.gradingsystem.validator.StudentValidator;
 
-/**
- * Servlet implementation class StudentResultServlet
- */
 public class StudentResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		//get Input
 				String regNo = request.getParameter("regno");
@@ -44,10 +39,10 @@ public class StudentResultServlet extends HttpServlet {
 					studentValidate.isRegnoExistService(regno);
 					
 					//get the StudentName, Average, Grade
-					studentResult = new UserFeatureService().getStudentResult(regno);
+					studentResult = new UserService().getStudentResult(regno);
 					
 					//get the Marks and Sub-Code
-					markList = new UserFeatureService().getStudentMarks(regno);
+					markList = new UserService().getStudentMarks(regno);
 					
 					Gson gson = new Gson();
 					String json1 = gson.toJson(markList);
@@ -70,7 +65,6 @@ public class StudentResultServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		//doGet(request, response);
 	}
 

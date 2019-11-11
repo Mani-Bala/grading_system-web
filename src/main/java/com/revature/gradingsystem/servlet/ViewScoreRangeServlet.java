@@ -1,4 +1,4 @@
-package com.revature.gradingsystem.controller;
+package com.revature.gradingsystem.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,51 +15,45 @@ import com.revature.gradingsystem.exception.ServiceException;
 import com.revature.gradingsystem.model.ScoreRange;
 import com.revature.gradingsystem.service.AdminService;
 
-/**
- * Servlet implementation class ViewScoreRangeServlet
- */
 public class ViewScoreRangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-   
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		AdminService adminservice = new AdminService();
-		List<ScoreRange>  list = null;
+		List<ScoreRange> list = null;
 		String errorMessage = null;
-		String status="";
+		String status = "";
 		try {
-				list = adminservice.viewScoreRangeService();
-				status = "success";
-						
+			list = adminservice.viewScoreRangeService();
+			status = "success";
+
 		} catch (ServiceException e) {
 			errorMessage = e.getMessage();
 		}
-		
+
 		String json = null;
 		if (status.equals("success")) {
-			//convert list to json
+			// convert list to json
 			Gson gson = new Gson();
 			json = gson.toJson(list);
-		}else {
+		} else {
 			JsonObject obj = new JsonObject();
-            obj.addProperty("errMessage", errorMessage);
-    		json = obj.toString();
+			obj.addProperty("errMessage", errorMessage);
+			json = obj.toString();
 		}
-		
-		//write the json as a response
+
+		// write the json as a response
 		PrintWriter out = response.getWriter();
 		out.write(json);
 		out.flush();
-		
-		
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// doGet(request, response);
 	}
 
 }
