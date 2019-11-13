@@ -10,13 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.JsonObject;
-import com.revature.gradingsystem.exception.ServiceException;
-import com.revature.gradingsystem.exception.ValidatorException;
+import com.revature.gradingsystem.controller.UpdateMarkController;
 import com.revature.gradingsystem.model.StudentMark;
 import com.revature.gradingsystem.model.Subject;
-import com.revature.gradingsystem.service.UserService;
-import com.revature.gradingsystem.validator.StudentValidator;
 
 public class UpdateMarkServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,12 +33,6 @@ public class UpdateMarkServlet extends HttpServlet {
 		int mark3 = Integer.parseInt(m3);
 		int mark4 = Integer.parseInt(m4);
 		int mark5 = Integer.parseInt(m5);
-
-		String errorMessage = null;
-		String status = "";
-		try {
-			StudentValidator studentValidate = new StudentValidator();
-			studentValidate.isRegnoUpdated(regno);
 
 			StudentMark sm1 = new StudentMark();
 
@@ -86,29 +76,7 @@ public class UpdateMarkServlet extends HttpServlet {
 			list.add(sm4);
 			list.add(sm5);
 
-			new UserService().updateMarksAndGradeService(regno, list);
-
-			status = "Success";
-		} catch (ValidatorException e) {
-			errorMessage = e.getMessage();
-
-		} catch (ServiceException e) {
-			errorMessage = e.getMessage();
-		}
-
-		String json = null;
-		// Gson gson = new Gson();
-		if (status.equals("Success")) {
-
-			JsonObject obj = new JsonObject();
-			obj.addProperty("responseMessage", "success");
-			json = obj.toString();
-
-		} else {
-			JsonObject obj = new JsonObject();
-			obj.addProperty("responseMessage", errorMessage);
-			json = obj.toString();
-		}
+			String json = new UpdateMarkController().updateMark(regno, list);
 
 		PrintWriter out = response.getWriter();
 		out.write(json);

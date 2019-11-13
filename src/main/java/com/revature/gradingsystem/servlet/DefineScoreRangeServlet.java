@@ -32,7 +32,7 @@ public class DefineScoreRangeServlet extends HttpServlet {
 		String errorMessage = null;
 		String status = "";
 		try {
-			gradeValidator.isGradeExist(grade.toUpperCase(), min, max);
+			gradeValidator.isGradeExist( min, max);
 
 			adminservice.updateScoreRangeService(grade.toUpperCase(), min, max);
 

@@ -158,28 +158,19 @@ public class UserFeature {
 					System.out.println("\nEnter a specific grade :");
 					String grade = sc.next();
 					List<StudentGradeDTO> gradeList = null;
-					try {
-						// grade Validation
-						GradeValidator gradeValidator = new GradeValidator();
-						gradeValidator.gradeCheck(grade.toUpperCase());
+					// call Service class and get the result
+					gradeList = userFeatureService.findByGradeService(grade.toUpperCase());
 
-						// call Service class and get the result
-						gradeList = userFeatureService.findByGradeService(grade.toUpperCase());
+					System.out.println("\nGRADE    |  AVERAGE  |  REG-NO   |   STUDENT NAME");
+					System.out.println("--------------------------------------------------");
 
-						System.out.println("\nGRADE    |  AVERAGE  |  REG-NO   |   STUDENT NAME");
-						System.out.println("--------------------------------------------------");
-
-						for (StudentGradeDTO details : gradeList) {
-							System.out.println(details.getGrade() + "            " + details.getAvg() + "        "
-									+ details.getRegNo() + "        " + details.getStudentName());
-						}
-
-						System.out.println("--------------------------------------------------");
-						validInput2 = false;
-					} catch (ValidatorException e) {
-						System.out.println(e.getMessage());
-						validInput2 = true;
+					for (StudentGradeDTO details : gradeList) {
+						System.out.println(details.getGrade() + "            " + details.getAvg() + "        "
+								+ details.getRegNo() + "        " + details.getStudentName());
 					}
+
+					System.out.println("--------------------------------------------------");
+					validInput2 = false;
 				} while (validInput2);
 
 				userFeature();

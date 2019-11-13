@@ -65,8 +65,6 @@ public class AdminFeature {
 				adminFeature();
 				break;
 			case 3:
-				
-				adminservice.deleteScoreRangeService();
 				adminFeature();
 				break;
 				
@@ -102,7 +100,7 @@ public class AdminFeature {
 			}
 
 			try {
-				gradeValidator.isGradeExist(grade.toUpperCase(), min, max);
+				gradeValidator.isGradeExist( min, max);
 				adminservice.updateScoreRangeService(grade.toUpperCase(), min, max);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

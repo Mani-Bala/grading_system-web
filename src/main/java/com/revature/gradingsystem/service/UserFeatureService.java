@@ -10,7 +10,6 @@ import com.revature.gradingsystem.exception.DBException;
 import com.revature.gradingsystem.exception.ServiceException;
 import com.revature.gradingsystem.exception.ValidatorException;
 import com.revature.gradingsystem.model.StudentMark;
-import com.revature.gradingsystem.validator.GradeValidator;
 import com.revature.gradingsystem.validator.StudentValidator;
 
 public class UserFeatureService {
@@ -18,8 +17,7 @@ public class UserFeatureService {
 	public void updateMarksAndGradeService(int regno, List<StudentMark> marks) throws ServiceException {
 		
 		try {
-			StudentValidator studentValidate = new StudentValidator();
-				studentValidate.isRegnoUpdated(regno);
+			new StudentValidator().isRegnoUpdated(regno);
 			
 			new StudentMarkDAO().insertMarks(regno, marks);
 			new StudentGradeDAO().insertGrade(regno, marks);
@@ -35,14 +33,8 @@ public class UserFeatureService {
 
 		List<StudentGradeDTO> list = null;
 		try {
-			// grade Validation
-			GradeValidator gradeValidator = new GradeValidator();
-				gradeValidator.gradeCheck(grade.toUpperCase());
-			
 			list = new StudentGradeDAO().findByGrade(grade);
-		}catch (ValidatorException e) {
-			throw new ServiceException(e.getMessage());
-		} catch (DBException e) {
+		}catch (DBException e) {
 			throw new ServiceException(e.getMessage());
 		}
 		return list;
